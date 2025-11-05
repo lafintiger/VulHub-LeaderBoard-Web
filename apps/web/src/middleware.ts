@@ -109,3 +109,11 @@ export const config = {
     '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)',
   ],
 };
+
+// Force middleware to run in Node.js runtime (not Edge)
+export const config = {
+  runtime: 'nodejs',
+  unstable_allowDynamic: [
+    '/node_modules/**',
+  ],
+}
