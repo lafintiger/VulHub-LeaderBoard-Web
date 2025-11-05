@@ -1,0 +1,7 @@
+build:
+  docker:
+    web: Dockerfile.heroku
+
+run:
+  web: cd apps/api && node dist/main.js
+
