@@ -11,6 +11,13 @@ import './matrix-unified.css';
 import './styles/accessibility.css';
 import './styles/responsive.css';
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+}
+
+
 const inter = Inter({ subsets: ['latin'] });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
