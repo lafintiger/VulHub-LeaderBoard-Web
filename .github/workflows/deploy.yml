@@ -21,17 +21,29 @@ jobs:
         with:
           version: 8
 
-      # Set Heroku config vars (environment variables)
+      # Set Heroku config vars (environment variables) - only if not already set
       - name: Set Heroku config vars
         run: |
           echo -e "machine api.heroku.com\n  login $HEROKU_EMAIL\n  password $HEROKU_API_KEY\nmachine git.heroku.com\n  login $HEROKU_EMAIL\n  password $HEROKU_API_KEY" > ~/.netrc
           chmod 600 ~/.netrc
           curl https://cli-assets.heroku.com/install.sh | sh
-          heroku config:set JWT_SECRET="$(openssl rand -base64 32)" -a $HEROKU_APP_NAME
-          heroku config:set REFRESH_TOKEN_SECRET="$(openssl rand -base64 32)" -a $HEROKU_APP_NAME
+          
+          # Only set JWT secrets if they don't exist (prevents overwriting existing secrets)
+          if ! heroku config:get JWT_SECRET -a $HEROKU_APP_NAME > /dev/null 2>&1; then
+            heroku config:set JWT_SECRET="$(openssl rand -base64 32)" -a $HEROKU_APP_NAME
+          fi
+          if ! heroku config:get JWT_REFRESH_SECRET -a $HEROKU_APP_NAME > /dev/null 2>&1; then
+            heroku config:set JWT_REFRESH_SECRET="$(openssl rand -base64 32)" -a $HEROKU_APP_NAME
+          fi
+          
+          # Always set these
           heroku config:set NODE_ENV="production" -a $HEROKU_APP_NAME
-          heroku config:set CORS_ORIGIN="https://$HEROKU_APP_NAME.herokuapp.com" -a $HEROKU_APP_NAME
-          heroku config:set API_PORT="3001" -a $HEROKU_APP_NAME
+          
+          # Set CORS_ORIGIN if not already set (you should update this manually with your frontend URL)
+          if ! heroku config:get CORS_ORIGIN -a $HEROKU_APP_NAME > /dev/null 2>&1; then
+            heroku config:set CORS_ORIGIN="https://$HEROKU_APP_NAME.herokuapp.com" -a $HEROKU_APP_NAME
+            echo "⚠️ CORS_ORIGIN set to default. Update it with your frontend URL!"
+          fi
         env:
           HEROKU_API_KEY:  ${{ secrets.HEROKU_API_KEY }}
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}

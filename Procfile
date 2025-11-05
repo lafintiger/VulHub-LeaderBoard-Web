@@ -1,1 +1,1 @@
-web: cd apps/api && pnpm install && pnpm exec nest start
+web: cd apps/api && pnpm install --prod && pnpm prisma generate && pnpm start:prod
