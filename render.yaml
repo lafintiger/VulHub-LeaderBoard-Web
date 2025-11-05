@@ -2,11 +2,12 @@ services:
   # API Service
   - type: web
     name: vulhub-api
-    env: node
+    runtime: node
     region: oregon
     plan: free
-    buildCommand: cd apps/api && npm install -g pnpm@8.10.0 && cd ../.. && pnpm install && pnpm build:api
-    startCommand: cd apps/api && pnpm start:prod
+    rootDir: apps/api
+    buildCommand: npm install -g pnpm@8.10.0 && cd ../.. && pnpm install && pnpm build:api
+    startCommand: pnpm start:prod
     envVars:
       - key: NODE_ENV
         value: production
