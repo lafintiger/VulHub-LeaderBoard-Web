@@ -1,0 +1,56 @@
+{
+  "name": "@vulhub/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.3.0",
+    "@tanstack/react-query": "^5.0.0",
+    "@vulhub/config": "workspace:*",
+    "@vulhub/schema": "workspace:*",
+    "@vulhub/ui": "workspace:*",
+    "@vulhub/utils": "workspace:*",
+    "axios": "^1.6.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "js-cookie": "^3.0.5",
+    "lucide-react": "^0.294.0",
+    "next": "^14.0.0",
+    "ogl": "^1.0.11",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.48.0",
+    "tailwind-merge": "^2.6.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.3.26",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.21",
+    "canvas": "^3.2.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "jest-canvas-mock": "^2.5.2",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.0.0"
+  },
+  "packageManager": "pnpm@8.10.0",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
