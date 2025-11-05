@@ -1,7 +1,8 @@
 FROM node:18-alpine
 
-# Install pnpm
-RUN npm install -g pnpm@8.10.0
+# Install build dependencies and pnpm
+RUN apk add --no-cache python3 make g++ && \
+    npm install -g pnpm@8.10.0
 
 # Set working directory
 WORKDIR /app
@@ -15,7 +16,7 @@ COPY packages/schema/package.json ./packages/schema/
 COPY packages/utils/package.json ./packages/utils/
 COPY packages/config/package.json ./packages/config/
 
-# Install dependencies
+# Install all dependencies (needed for build)
 RUN pnpm install
 
 # Copy source code
@@ -24,8 +25,8 @@ COPY . .
 # Generate Prisma client
 RUN cd apps/api && pnpm prisma generate
 
-# Build packages and API
-RUN pnpm build:api
+# Build packages first, then API
+RUN pnpm build:packages && pnpm --filter @vulhub/api build
 
 # Expose port
 EXPOSE $PORT
